@@ -38,21 +38,15 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void didChangeDependencies() {
     if (isInit) {
-      if (ts.TextScaler.of<TextScalingFactor>(context) != null) {
-        sliderValue =
-            ts.TextScaler.of<TextScalingFactor>(context).scaleFactor - 1.0;
-      }
-      isInit = false;
+      sliderValue =
+          ts.TextScaler.of<TextScalingFactor>(context).scaleFactor - 1.0;
+          isInit = false;
     }
     super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
-    double _textScaleFactor = 1.0;
-    if (ts.TextScaler.of<TextScalingFactor>(context) != null) {
-      _textScaleFactor = ts.TextScaler.of<TextScalingFactor>(context).scaleFactor;
-    }
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -74,7 +68,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           fontWeight: FontWeight.bold,
                           fontSize: 24.0,
                         ),
-                        textScaleFactor: _textScaleFactor,
+                        textScaler: TextScaler.linear(
+                            ts.TextScaler.of<TextScalingFactor>(context).scaleFactor),
                         textAlign: TextAlign.center,
                       ),
                       Text(
@@ -83,13 +78,15 @@ class _MyHomePageState extends State<MyHomePage> {
                           fontWeight: FontWeight.w500,
                           fontSize: 20.0,
                         ),
-                        textScaleFactor: _textScaleFactor,
+                        textScaler: TextScaler.linear(
+                            ts.TextScaler.of<TextScalingFactor>(context).scaleFactor),
                         textAlign: TextAlign.center,
                       ),
                       Text(
                         'This is sample text 2.',
                         style: TextStyle(fontSize: 16.0),
-                        textScaleFactor: _textScaleFactor,
+                        textScaler: TextScaler.linear(
+                            ts.TextScaler.of<TextScalingFactor>(context).scaleFactor),
                         textAlign: TextAlign.center,
                       ),
                     ],
@@ -114,16 +111,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       max: 1,
                       value: sliderValue,
                       onChanged: (value) {
-                        if (ts.TextScaler.of<TextScalingFactor>(context) != null) {
-                          ts.TextScaler.update(context,
-                              TextScalingFactor(scaleFactor: 1.0 + value));
-                          sliderValue = value;
-                        } else {
-                          setState(() {
-                            sliderValue = value;
-                          });
-                        }
-                      },
+                        ts.TextScaler.update(context,
+                            TextScalingFactor(scaleFactor: 1.0 + value));
+                        sliderValue = value;
+                                            },
                     ),
                   ],
                 ),
